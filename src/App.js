@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './style.min.css';
+import {List} from './list';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state.task = '';
+    this.state.tasks = [];
+    this.state.completed = [];
+    this.addTask = this.addTask.bind(this);
+    this.markCompleted = this.markCompleted.bind(this);
+  }
+
+addTask(newTask) {
+  this.props.tasks.push(newTask);
+}
+
+markCompleted(task) {
+  this.state.completed.push(task);
+  const taskToComplete = this.props.tasks.indexOf(task);
+  if (taskToComplete > -1) {
+    this.props.tasks.splice(taskToComplete, 1);
+  }
+}
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <List />
     );
   }
 }
