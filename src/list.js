@@ -9,15 +9,38 @@ export class List extends Component {
 
   addTask(e) {
    let newTask = this.newTask.value;
+   this.props.onChange(newTask);
    alert(`${newTask} added!`);
   }
 
   markCompleted(e) {
-   alert(`${this.completed} completed!`)
-   console.log(this.getElementById);
+    let completedTask = e.target.id;
+      //  console.log(e.target.id);
+    this.props.onChange(completedTask);
   }
 
   render() {
+    console.log(this.props.tasks);
+    const currentTasks = this.props.tasks.map((oneTask, index) => {
+      return (
+      <li key={index}>
+      <hr />
+      {oneTask}
+        <button id={oneTask} onClick={this.markCompleted}>Complete</button>
+      <hr />
+      </li>
+    )});
+
+    console.log("CompletedTasks: " + this.props.completedTasks);
+  const completedTasks = this.props.completedTasks.map((oneTask, index) => {
+    return (
+      <li key={index}>
+      <hr />
+       {oneTask}
+      <hr />
+      </li>
+    )});
+
     return (
       <div>
       <div className="row input">
@@ -29,30 +52,14 @@ export class List extends Component {
       <div className="row">
       Tasks To Do
       <ul className="active">
-      {this.props.tasks.map((oneTask, index) => (
-        <li key={index}>
-        <hr />
-         <span id={index}>{oneTask}</span>
-         <button onClick={this.markCompleted}>Mark Completed</button>
-        <hr />
-        </li>
-
-      ))
-      }
+      {currentTasks}
       </ul>
       </div>
 
       <div className="row">
       Completed tasks
       <ul className="completed">
-      {this.props.completedTasks.map((oneTask, index) => (
-        <li key={index}>
-        <hr />
-         {oneTask}
-        <hr />
-        </li>
-      ))
-      }
+      {completedTasks}
       </ul>
       </div>
       </div>
