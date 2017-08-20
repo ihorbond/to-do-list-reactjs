@@ -8,35 +8,72 @@ class App extends Component {
     // this.markCompleted = this.markCompleted.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
     this.state = {
-      tasks: ['task2', 'task3'],
-      completedTasks: ['task1']
+      tasks: ['Wash Dishes', 'Buy groceries'],
+      completedTasks: ['Do laundry']
     };
   }
 
 updateTasks(task) {
-  // console.log("UPDATE TASKS: " + task);
-  let prevTasks = this.state.tasks;
-  let prevCompTasks = this.state.completedTasks;
-  //if task doesnt exist in tasks array - it must be new task
-  if (this.state.tasks.indexOf(task) === -1) {
-    //add new task to previous array
-    prevTasks.push(task);
-    this.setState({
-      tasks: prevTasks
-    });
-} else {
-let taskToComplete = prevTasks.indexOf(task);
-prevTasks.forEach((oneTask, index) => {
-  if(index === taskToComplete) {
-    prevTasks.splice(index,1);
-  }
-});
-prevCompTasks.push(task);
-this.setState({
-  tasks: prevTasks,
-  completedTasks: prevCompTasks
-});
+//add new task
+if(!this.state.tasks.includes(task)) {
+  let newTasks = this.state.tasks;
+  newTasks.push(task);
+  this.setState({
+    tasks: newTasks
+  });
+  return;
 }
+
+//mark as completed
+if (this.state.tasks.includes(task)) {
+let newCompletedTasks = this.state.completedTasks;
+let newTasks          = this.state.tasks;
+let taskToRemoveIndex = this.state.tasks.indexOf(task);
+newTasks.splice(taskToRemoveIndex, 1);
+newCompletedTasks.push(task);
+this.setState({
+  tasks: newTasks,
+  completedTasks: newCompletedTasks
+});
+return;
+}
+
+//remove task
+if(this.state.completedTasks.includes(task)) {
+  let newCompletedTasks = this.state.completedTasks;
+  let taskToRemoveIndex = this.state.completedTasks.indexOf(task);
+  newCompletedTasks.splice(taskToRemoveIndex, 1);
+  this.setState({
+    completedTasks: newCompletedTasks
+  });
+  return;
+}
+
+
+  // console.log("UPDATE TASKS: " + task);
+//   let prevTasks = this.state.tasks;
+//   let prevCompTasks = this.state.completedTasks;
+//   //if task doesnt exist in tasks array - it must be new task
+//   if (prevTasks.indexOf(task) === -1) {
+//     //add new task to previous array
+//     prevTasks.push(task);
+//     this.setState({
+//       tasks: prevTasks
+//     });
+// }
+// else {
+// let taskToComplete = prevTasks.indexOf(task);
+// prevTasks.forEach((oneTask, index) => {
+//   if(index === taskToComplete) {
+//     prevTasks.splice(index,1);
+//   }
+// });
+// prevCompTasks.push(task);
+// this.setState({
+//   tasks: prevTasks,
+//   completedTasks: prevCompTasks
+// });
+// }
 }
 
 
