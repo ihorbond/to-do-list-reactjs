@@ -5,76 +5,50 @@ import {List} from './list';
 class App extends Component {
   constructor(props) {
     super(props);
-    // this.markCompleted = this.markCompleted.bind(this);
-    this.updateTasks = this.updateTasks.bind(this);
+    this.addTask       = this.addTask.bind(this);
+    this.markCompleted = this.markCompleted.bind(this);
+    this.removeTask    = this.removeTask.bind(this);
     this.state = {
-      tasks: ['Wash Dishes', 'Buy groceries'],
+      tasks: ['Wash dishes', 'Buy tooth paste', 'Clean room'],
       completedTasks: ['Do laundry']
     };
   }
 
-updateTasks(task) {
-//add new task
-if(!this.state.tasks.includes(task)) {
-  let newTasks = this.state.tasks;
-  newTasks.push(task);
-  this.setState({
-    tasks: newTasks
-  });
-  return;
-}
+  //add new task
+  addTask (task) {
+    console.log("add task " + task);
+    let newTasks = this.state.tasks;
+    newTasks.push(task);
+    this.setState({
+      tasks: newTasks
+    });
+  }
+
+  //remove task
+  removeTask(task) {
+    console.log("remove task " + task);
+    let newCompletedTasks = this.state.completedTasks;
+    let taskToRemoveIndex = this.state.completedTasks.indexOf(task);
+    newCompletedTasks.splice(taskToRemoveIndex, 1);
+    this.setState({
+      completedTasks: newCompletedTasks
+    });
+  }
 
 //mark as completed
-if (this.state.tasks.includes(task)) {
+markCompleted(task) {
+console.log("mark completed " + task);
 let newCompletedTasks = this.state.completedTasks;
 let newTasks          = this.state.tasks;
-let taskToRemoveIndex = this.state.tasks.indexOf(task);
-newTasks.splice(taskToRemoveIndex, 1);
+let taskToCompleteIndex = this.state.tasks.indexOf(task);
+newTasks.splice(taskToCompleteIndex, 1);
 newCompletedTasks.push(task);
 this.setState({
   tasks: newTasks,
   completedTasks: newCompletedTasks
 });
-return;
 }
 
-//remove task
-if(this.state.completedTasks.includes(task)) {
-  let newCompletedTasks = this.state.completedTasks;
-  let taskToRemoveIndex = this.state.completedTasks.indexOf(task);
-  newCompletedTasks.splice(taskToRemoveIndex, 1);
-  this.setState({
-    completedTasks: newCompletedTasks
-  });
-  return;
-}
-
-
-  // console.log("UPDATE TASKS: " + task);
-//   let prevTasks = this.state.tasks;
-//   let prevCompTasks = this.state.completedTasks;
-//   //if task doesnt exist in tasks array - it must be new task
-//   if (prevTasks.indexOf(task) === -1) {
-//     //add new task to previous array
-//     prevTasks.push(task);
-//     this.setState({
-//       tasks: prevTasks
-//     });
-// }
-// else {
-// let taskToComplete = prevTasks.indexOf(task);
-// prevTasks.forEach((oneTask, index) => {
-//   if(index === taskToComplete) {
-//     prevTasks.splice(index,1);
-//   }
-// });
-// prevCompTasks.push(task);
-// this.setState({
-//   tasks: prevTasks,
-//   completedTasks: prevCompTasks
-// });
-// }
-}
 
 
   render() {
@@ -82,7 +56,9 @@ if(this.state.completedTasks.includes(task)) {
       <List
       tasks={this.state.tasks}
       completedTasks={this.state.completedTasks}
-      onChange={this.updateTasks}
+      addTask={this.addTask}
+      markCompleted={this.markCompleted}
+      removeTask={this.removeTask}
       />
     );
   }

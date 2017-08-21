@@ -29,6 +29,7 @@ ul {
 
 h2 {
   text-align: center;
+  font-weight: bold;
 }
 
 .btn {
@@ -65,16 +66,16 @@ width: 100%;
     background: none;
     border: none;
     border-bottom: 1px solid black;
-    width: 18rem;
+    width: 20rem;
   }
   button {
     float: none;
-    margin-top: 0.5em;
-    width: 18rem;
+    margin: -0.5em 0 0 0.5rem;
+    width: 4rem;
   }
 }
 
 
-@media screen and (max-width: 1000px) and (min-width: 700px) {
+@media screen and (max-width: 600px) {
   font-size: 8px;
 }
